@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        {% block title %}
+            {{post.title}}
+        {% endblock %}
+    </title>
+</head>
+<body>
+    
+{% block content %}
+    
+<h1>{{post.title}} detail : </h1>
+        
+<p>Author: {{post.author}}</p>
+<p> Body : {{post.body}}</p>
+<hr>
+<p>Created Time : {{post.created_date}}</p>
+{% endblock %}
+<h2>Comment :</h2>
+{% block comment %}
+    {% if new_comment %}
+        <p style="color: brown;">نظر شما در انتظار تایید است</p>
+    {% else  %}
+        <form action="" method="post">
+            {{comment_form.as_p}}
+            {% csrf_token %}
+            <input type="submit" value="Send comment">
+        </form>
+    {%  endif %}
+
+    {% for comment in post.active_comment %}
+        <p>name : {{comment.name}}</p>
+        <p>email : {{comment.email}}</p>
+        <p>comment :{{comment.comment}}</p>
+        <hr>
+    {% endfor %}
+{% endblock comment %}
+
+    
+</body>
+</html>
+
+
